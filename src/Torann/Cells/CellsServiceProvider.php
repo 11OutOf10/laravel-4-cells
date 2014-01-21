@@ -66,7 +66,7 @@ class CellsServiceProvider extends ServiceProvider {
 		$this->app['cells'] = $this->app->share(function($app)
 		{
 			$caching_disabled = $app->environment() === 'local' && $app['config']['cells::disable_cache_in_dev'];
-			return new Cells($app['view'], $caching_disabled);
+			return new Cells($caching_disabled,$app);
 		});
 	}
 

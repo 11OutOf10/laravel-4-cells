@@ -1,5 +1,6 @@
 <?php namespace Torann\Cells;
 
+use Illuminate\Foundation\Application;
 use Illuminate\Support\Str;
 use ReflectionClass;
 use Illuminate\View\Environment;
@@ -9,16 +10,14 @@ class Cells {
 	/**
 	 * Environment view.
 	 *
-	 * @var Illuminate\View\Environment
-	 */
-	protected $view;
-
-	/**
-	 * Environment view.
-	 *
 	 * @var Boolean
 	 */
 	protected $caching_disabled = false;
+
+	/**
+     * @var \Illuminate\Foundation\Application
+     */
+	protected $app;
 
 	/**
 	 * Create a new instance.
@@ -26,12 +25,10 @@ class Cells {
 	 * @param  \Illuminate\View\Environment      $view
 	 * @return void
 	 */
-	public function __construct(Environment $view, $caching_disabled)
+	public function __construct($caching_disabled, Application $app)
 	{
-		$this->view 			= $view;
 		$this->caching_disabled = $caching_disabled;
-
-		$this->view->addLocation(app_path()."/cells");
+		$this->app 	            = $app;
 	}
 
 	/**
@@ -61,7 +58,8 @@ class Cells {
 				throw new UnknownCellClassException("Cell target [$className] is not instantiable.");
 			}
 
-			$instance = $reflector->newInstance($this->view, $this->caching_disabled);
+			$instance = $this->app->make($className);
+			$instance->setDisableCache($this->caching_disabled);
 
 			array_set($cells, $className, $instance);
 		}
