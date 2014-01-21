@@ -3,6 +3,7 @@
 use Illuminate\Console\Command;
 use Illuminate\Config\Repository;
 use Illuminate\Filesystem\Filesystem as File;
+use Illuminate\Support\Str;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 
@@ -57,7 +58,7 @@ class CellsGeneratorCommand extends Command {
 	public function fire()
 	{
 		// Cell controller name is camel case.
-		$cellControllerName = 'Cell'.ucfirst($this->getCellName());
+		$cellControllerName = 'Cell'.  Str::studly($this->getCellName());
 
 		// Cell controller file is camel with php extension.
 		$cellControllerFile = $cellControllerName.'.php';

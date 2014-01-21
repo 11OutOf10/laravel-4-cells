@@ -1,5 +1,6 @@
 <?php namespace Torann\Cells;
 
+use Illuminate\Support\Str;
 use ReflectionClass;
 use Illuminate\View\Environment;
 
@@ -48,7 +49,7 @@ class Cells {
 		// If the class name is not lead with upper case add prefix "Cell".
 		if ( ! preg_match('|^[A-Z]|', $className))
 		{
-			$className = 'Cell'.ucfirst($className);
+			$className = 'Cell'.Str::studly($className);
 		}
 
 		if ( ! $instance = array_get($cells, $className))
