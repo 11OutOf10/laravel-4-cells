@@ -2,6 +2,7 @@
 
 use Closure;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\View;
 use Illuminate\View\Environment;
 use Illuminate\Config\Repository;
 
@@ -144,12 +145,7 @@ abstract class CellBaseController {
 	 */
 	public function renderView( $path )
 	{
-		if ( ! $this->view->exists($path))
-		{
-			throw new UnknownCellsFileException("Cell view [$this->name.$this->viewAction] not found.");
-		}
-
-		return $this->view->make( $path, $this->data )->render();
+		return View::make('cells' . DIRECTORY_SEPARATOR . $path,$this->data);
 	}
 
 }
