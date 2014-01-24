@@ -35,11 +35,11 @@ class Cells {
 	 * Cell instance.
 	 *
 	 * @param  string $className
-	 * @param  string $action
+	 * @param  string $template
 	 * @param  array  $attributes
 	 * @return Torann\Cells
 	 */
-	public function get($className, $action = 'display', $attributes = array())
+	public function get($className, $template = 'display', $attributes = array() , $action = 'display' )
 	{
 		static $cells = array();
 
@@ -66,7 +66,7 @@ class Cells {
 
 		$instance->setAttributes($attributes);
 
-		$instance->initCell( $action );
+		$instance->initCell( $template , $action );
 
 		return $instance->displayView();
 	}

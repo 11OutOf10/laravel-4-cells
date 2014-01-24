@@ -15,11 +15,18 @@ abstract class CellBaseController {
     protected $view;
 
     /**
+     * View template.
+     *
+     * @var string
+     */
+    protected $template;
+
+    /**
      * View action.
      *
      * @var string
      */
-    protected $viewAction;
+    protected $action = 'display';
 
     /**
      * Default attributes.
@@ -96,13 +103,13 @@ abstract class CellBaseController {
      *
      * @return void
      */
-    public function initCell( $viewAction = 'display' )
+    public function initCell( $template = 'display' , $action = 'display' )
     {
-        $this->viewAction = $viewAction;
+        $this->template = $template;
 
         $this->init();
 
-        $data = (array) $this->$viewAction();
+        $data = (array) $this->$action();
         $this->data = array_merge($this->attributes, $data);
     }
 
@@ -113,7 +120,7 @@ abstract class CellBaseController {
      */
     public function displayView()
     {
-        $path = "$this->name.$this->viewAction";
+        $path = "$this->name.$this->template";
 
         // Are we caching this?
         if($this->cache)
